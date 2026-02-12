@@ -1,0 +1,44 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Centralize business phone/address and propagate to Contact + Footer",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Use `frontend/src/content/siteContent.ts` as the single source of truth for business phone and address, and ensure the Contact section renders them from `siteContent.contact`.",
+      "acceptanceCriteria": [
+        "`siteContent.contact.phone` and `siteContent.contact.address` are the only values that need to be edited to change the phone/address shown in the Contact section.",
+        "`frontend/src/sections/ContactSection.tsx` continues to render the phone and address from `siteContent.contact` (no hardcoded duplicates introduced).",
+        "All user-facing labels remain in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/content/siteContent.ts",
+          "operation": "modify",
+          "description": "Confirm and (if needed) normalize the `siteContent.contact.phone` and `siteContent.contact.address` fields as the canonical, editable values (no additional duplicate constants for phone/address introduced)."
+        },
+        {
+          "path": "frontend/src/sections/ContactSection.tsx",
+          "operation": "modify",
+          "description": "Ensure the Address and Phone display continue to render strictly from `siteContent.contact.address` and `siteContent.contact.phone`, with no hardcoded fallback strings added; keep all labels in English."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Remove hardcoded phone/address from the footer and render the “Visit Us” block using `siteContent.contact.address` and `siteContent.contact.phone`.",
+      "acceptanceCriteria": [
+        "`frontend/src/components/SiteFooter.tsx` no longer contains hardcoded address/phone strings (e.g., \"123 Main Street\" or \"(415) 555-0123\").",
+        "Footer “Visit Us” displays the same phone/address as the Contact section, sourced from `frontend/src/content/siteContent.ts`.",
+        "No other footer content/regressions are introduced (quick links and branding still render)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SiteFooter.tsx",
+          "operation": "modify",
+          "description": "Import `siteContent` and replace the hardcoded “Visit Us” address/phone lines with renders from `siteContent.contact.address` and `siteContent.contact.phone`; preserve existing branding, quick links, and layout."
+        }
+      ]
+    }
+  ]
+}

@@ -1,2 +1,3 @@
-# second-bowl-chinese-restaurant-website
-Exported from Caffeine project: Update business phone number and location everywhere it appears
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

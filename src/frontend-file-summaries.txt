@@ -1,0 +1,17 @@
+{
+  "frontend/src/App.tsx": "Main application component that renders the site structure with header, hero, menu, about, contact sections, and footer.",
+  "frontend/src/components/SiteHeader.tsx": "Responsive navigation header with logo, desktop menu links, and mobile sheet menu for smooth scrolling to sections.",
+  "frontend/src/components/SiteFooter.tsx": "Footer component with branding, quick links, and contact info sourced from siteContent, plus attribution with dynamic year and UTM-tracked caffeine.ai link.",
+  "frontend/src/components/Section.tsx": "Reusable section wrapper component providing consistent padding and container styling across all page sections.",
+  "frontend/src/components/Gallery.tsx": "Responsive image gallery component with hover effects displaying restaurant photos in a grid layout.",
+  "frontend/src/sections/HeroSection.tsx": "Hero section featuring restaurant logo, hero image, tagline, CTA button to menu, and key highlights in cards.",
+  "frontend/src/sections/MenuSection.tsx": "Menu section displaying categorized food items with names, descriptions, and prices in organized cards.",
+  "frontend/src/sections/AboutSection.tsx": "About section with restaurant story, approach text, and photo gallery showcasing dishes and ambiance.",
+  "frontend/src/sections/ContactSection.tsx": "Contact section with business information and validated contact form showing success state on submission.",
+  "frontend/src/content/siteContent.ts": "Centralized editable content for hero tagline, highlights, about text, gallery metadata, and contact details.",
+  "frontend/src/data/menu.ts": "Menu data structure with categories and items including names, descriptions, and prices for all dishes.",
+  "frontend/src/lib/utils.ts": "Utility function for merging Tailwind CSS classes using clsx and tailwind-merge.",
+  "frontend/src/index.css": "Global styles with OKLCH color system featuring warm red/gold Chinese restaurant palette and custom typography.",
+  "frontend/tailwind.config.js": "Tailwind configuration with extended theme including custom fonts (Playfair Display and Inter) and design tokens.",
+  "frontend/src/hooks/useQueries.ts": "Empty placeholder file for future React Query hooks when backend functionality is added."
+}

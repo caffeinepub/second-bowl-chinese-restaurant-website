@@ -1,0 +1,23 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-remove-hardcoded-phone-number-and-address-from-the-footer-and-render-the-footer-visit-us-block-using-sitecontent-contact-address-and-sitecontent-contact-phone-so-updates-automatically-propagate-to-the-footer",
+      "featureTitle": "Remove hardcoded phone number and address from the footer and render the footer “Visit Us” block using `siteContent.contact.address` and `siteContent.contact.phone` so updates automatically propagate to the footer.",
+      "files": [
+        "frontend/src/components/SiteFooter.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "kind": "build_request",
+  "title": "Update business phone number and location everywhere it appears",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Make the business phone number and location (address) editable from a single source of truth in `frontend/src/content/siteContent.ts`, and ensure the Contact section displays those values from `siteContent.contact`.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Contact number change and location"
+        ]
+      },
+      "acceptanceCriteria": [
+        "`siteContent.contact.phone` and `siteContent.contact.address` are the only values that need to be edited to change the phone/address shown in the Contact section.",
+        "`frontend/src/sections/ContactSection.tsx` continues to render the phone and address from `siteContent.contact` (no hardcoded duplicates introduced).",
+        "All user-facing labels remain in English."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Remove hardcoded phone number and address from the footer and render the footer “Visit Us” block using `siteContent.contact.address` and `siteContent.contact.phone` so updates automatically propagate to the footer.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Contact number change and location"
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/src/components/SiteFooter.tsx` no longer contains hardcoded address/phone strings (e.g., \"123 Main Street\" or \"(415) 555-0123\").",
+        "Footer “Visit Us” displays the same phone/address as the Contact section, sourced from `frontend/src/content/siteContent.ts`.",
+        "No other footer content/regressions are introduced (quick links and branding still render)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not edit files under `frontend/src/components/ui` (compose existing UI components instead).",
+    "Do not modify immutable hook/bootstrap files (e.g., `frontend/src/main.tsx`, `frontend/src/hooks/useInternetIdentity.ts[x]`, `frontend/src/hooks/useActor.ts`)."
+  ],
+  "nonGoals": [
+    "Adding a backend/admin panel to manage contact details.",
+    "Adding geolocation, maps, GPS, or third-party map SDK integrations."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

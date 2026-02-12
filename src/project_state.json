@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "New project",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-remove-hardcoded-phone-number-and-address-from-the-footer-and-render-the-footer-visit-us-block-using-sitecontent-contact-address-and-sitecontent-contact-phone-so-updates-automatically-propagate-to-the-footer",
+      "title": "Remove hardcoded phone number and address from the footer and render the footer “Visit Us” block using `siteContent.contact.address` and `siteContent.contact.phone` so updates automatically propagate to the footer.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Update the business contact phone number and location information displayed in the app/site",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Make the business phone number and location (address) editable from a single source of truth in `frontend/src/content/siteContent.ts`, and ensure the Contact section displays those values from `siteContent.contact`.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Update business phone number and location everywhere it appears",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

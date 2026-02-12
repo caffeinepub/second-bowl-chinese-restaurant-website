@@ -1,0 +1,24 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-12T15:34:48.532Z",
+  "summary": "Footer now renders the “Visit Us” block from `siteContent.contact.address` and `siteContent.contact.phone`, but there is no diff evidence that `siteContent.contact` was updated/centralized or that `ContactSection` is rendering phone/address from `siteContent.contact` as required.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Make the business phone number and location (address) editable from a single source of truth in `frontend/src/content/siteContent.ts`, and ensure the Contact section displays those values from `siteContent.contact`.",
+      "reason": "The diff summary includes no changes to `frontend/src/content/siteContent.ts` or `frontend/src/sections/ContactSection.tsx`, so there is no evidence that the Contact section is sourcing phone/address from `siteContent.contact` or that the single-source-of-truth fields were added/confirmed.",
+      "evidence": [
+        "frontend-file-summaries.txt (lists ContactSection.tsx and siteContent.ts but shows no modifications)",
+        "file-diff: only modified file shown with code changes is frontend/src/components/SiteFooter.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.66,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/components/SiteFooter.tsx",
+    "project_state.json"
+  ]
+}
