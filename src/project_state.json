@@ -7,10 +7,26 @@
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-remove-hardcoded-phone-number-and-address-from-the-footer-and-render-the-footer-visit-us-block-using-sitecontent-contact-address-and-sitecontent-contact-phone-so-updates-automatically-propagate-to-the-footer",
-      "title": "Remove hardcoded phone number and address from the footer and render the footer “Visit Us” block using `siteContent.contact.address` and `siteContent.contact.phone` so updates automatically propagate to the footer.",
+      "id": "feature-update-the-admin-orders-panel-ui-frontend-so-the-orders-list-and-order-details-visually-match-the-style-of-the-uploaded-reference-screenshot-cart-style-rounded-cards-soft-shadows-warm-primary-accent-for-totals-clear-spacing-and-pill-rounded-controls",
+      "title": "Update the Admin Orders panel UI (frontend) so the orders list and order details visually match the style of the uploaded reference screenshot (cart-style): rounded cards, soft shadows, warm primary accent for totals, clear spacing, and pill/rounded controls.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-admin-order-details-dialog-use-the-same-card-list-styling-as-the-reference-screenshot-for-the-order-items-section-cart-item-style-list-including-a-clear-per-item-layout-and-a-summary-block-at-the-bottom-that-highlights-the-total-in-the-warm-primary-color",
+      "title": "Make the Admin Order Details dialog use the same card/list styling as the reference screenshot for the order items section (cart-item style list), including a clear per-item layout and a summary block at the bottom that highlights the total in the warm primary color.",
       "reqIds": [
         "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-adjust-any-necessary-tailwind-utility-classes-or-local-styling-without-editing-immutable-ui-component-sources-to-support-the-new-cart-style-order-cards-and-summary-blocks-across-light-and-dark-modes",
+      "title": "Add/adjust any necessary Tailwind utility classes or local styling (without editing immutable UI component sources) to support the new cart-style order cards and summary blocks across light and dark modes.",
+      "reqIds": [
+        "REQ-3"
       ],
       "version": 1
     }
@@ -18,20 +34,12 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Update the business contact phone number and location information displayed in the app/site",
+      "summary": "Make the Order panel match the same styling/layout as the current admin panel (consistent look and feel).",
       "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Make the business phone number and location (address) editable from a single source of truth in `frontend/src/content/siteContent.ts`, and ensure the Contact section displays those values from `siteContent.contact`.",
-      "reqIds": [
-        "REQ-1"
-      ],
       "status": "pending"
     }
   ],
-  "projectName": "Update business phone number and location everywhere it appears",
+  "projectName": "Make Admin Orders panel match the uploaded cart-style UI",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

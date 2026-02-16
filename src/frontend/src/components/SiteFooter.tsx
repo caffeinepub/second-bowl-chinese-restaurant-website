@@ -1,14 +1,12 @@
 import { Heart } from 'lucide-react';
 import { siteContent } from '@/content/siteContent';
 
-const footerLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Menu', href: '#menu' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
-];
-
 export function SiteFooter() {
+  const currentYear = new Date().getFullYear();
+  const appIdentifier = encodeURIComponent(
+    typeof window !== 'undefined' ? window.location.hostname : 'second-bowl'
+  );
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -16,23 +14,24 @@ export function SiteFooter() {
     }
   };
 
-  const appIdentifier = encodeURIComponent(
-    typeof window !== 'undefined' ? window.location.hostname : 'second-bowl'
-  );
+  const hasWhatsApp = siteContent.contact.whatsappLink && siteContent.contact.whatsappLink.trim() !== '';
 
   return (
-    <footer className="border-t bg-muted/30">
-      <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    <footer className="bg-muted/50 border-t">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <img
-                src="/assets/generated/second-bowl-logo.dim_512x512.png"
-                alt="Second Bowl Logo"
-                className="h-10 w-10 object-contain"
+                src="/assets/generated/second-bowl-logo-from-menu.dim_512x512.png"
+                alt="Second Bowl"
+                className="h-12 w-12 object-contain"
               />
-              <span className="text-xl font-bold">Second Bowl</span>
+              <div>
+                <h3 className="font-bold text-lg">Second Bowl</h3>
+                <p className="text-sm text-muted-foreground">Chinese Cuisine</p>
+              </div>
             </div>
             <p className="text-sm text-muted-foreground">
               Authentic Chinese cuisine crafted with passion and tradition.
@@ -41,39 +40,91 @@ export function SiteFooter() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wider">Quick Links</h3>
-            <nav className="flex flex-col space-y-2">
-              {footerLinks.map((link) => (
+            <h4 className="font-semibold">Quick Links</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
                 <button
-                  key={link.href}
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
+                  onClick={() => scrollToSection('#home')}
+                  className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {link.label}
+                  Home
                 </button>
-              ))}
-            </nav>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollToSection('#menu')}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Menu
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollToSection('#about')}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  About
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollToSection('#contact')}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Contact
+                </button>
+              </li>
+            </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Visit Us */}
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wider">Visit Us</h3>
-            <div className="text-sm text-muted-foreground space-y-1">
+            <h4 className="font-semibold">Visit Us</h4>
+            <div className="space-y-2 text-sm text-muted-foreground">
               <p>{siteContent.contact.address}</p>
-              <p className="pt-2">{siteContent.contact.phone}</p>
+              <div className="space-y-1">
+                {siteContent.contact.phones.map((phone, index) => (
+                  <p key={index}>
+                    <a href={`tel:${phone}`} className="hover:text-primary transition-colors">
+                      {phone}
+                    </a>
+                  </p>
+                ))}
+              </div>
+              <p>{siteContent.contact.email}</p>
+              {hasWhatsApp && (
+                <div className="flex items-center space-x-2 pt-2">
+                  <a
+                    href={siteContent.contact.whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 hover:opacity-80 transition-opacity"
+                    aria-label="Contact us on WhatsApp"
+                  >
+                    <img
+                      src="/assets/generated/whatsapp-logo.dim_128x128.png"
+                      alt="WhatsApp"
+                      className="h-6 w-6"
+                    />
+                    <span className="text-primary hover:underline">Chat with us</span>
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t text-center text-sm text-muted-foreground">
-          <p className="flex items-center justify-center gap-1 flex-wrap">
-            © {new Date().getFullYear()}. Built with <Heart className="h-4 w-4 text-primary fill-primary" /> using{' '}
+        <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
+          <p>
+            © {currentYear} Second Bowl. All rights reserved.
+          </p>
+          <p className="mt-2 flex items-center justify-center gap-1">
+            Built with <Heart className="h-4 w-4 text-primary fill-primary" /> using{' '}
             <a
               href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${appIdentifier}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-primary transition-colors underline"
+              className="text-primary hover:underline font-medium"
             >
               caffeine.ai
             </a>

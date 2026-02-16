@@ -8,10 +8,162 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const idlService = IDL.Service({});
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const OrderStatus = IDL.Variant({
+  'shipped' : IDL.Null,
+  'cancelled' : IDL.Null,
+  'pending' : IDL.Null,
+  'delivered' : IDL.Null,
+  'processing' : IDL.Null,
+});
+export const Address = IDL.Record({
+  'zip' : IDL.Text,
+  'street' : IDL.Text,
+  'country' : IDL.Text,
+  'city' : IDL.Text,
+  'name' : IDL.Text,
+  'state' : IDL.Text,
+  'phone' : IDL.Text,
+});
+export const Item = IDL.Record({
+  'id' : IDL.Nat,
+  'name' : IDL.Text,
+  'price' : IDL.Nat,
+});
+export const OrderItem = IDL.Record({
+  'total' : IDL.Nat,
+  'item' : Item,
+  'quantity' : IDL.Nat,
+});
+export const Order = IDL.Record({
+  'id' : IDL.Nat,
+  'status' : OrderStatus,
+  'billingAddress' : Address,
+  'customer' : IDL.Principal,
+  'createdAt' : IDL.Int,
+  'updatedAt' : IDL.Int,
+  'totalAmount' : IDL.Nat,
+  'shippingAddress' : Address,
+  'items' : IDL.Vec(OrderItem),
+});
+export const UserProfile = IDL.Record({
+  'name' : IDL.Text,
+  'phone' : IDL.Text,
+  'location' : IDL.Text,
+});
+
+export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'cancelOrder' : IDL.Func([IDL.Nat], [IDL.Opt(Order)], []),
+  'connectivityCheck' : IDL.Func([], [IDL.Text], ['query']),
+  'createOrder' : IDL.Func([IDL.Vec(OrderItem), Address, Address], [Order], []),
+  'getAllOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
+  'getCallerRole' : IDL.Func([], [UserRole], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getOrder' : IDL.Func([IDL.Nat], [IDL.Opt(Order)], ['query']),
+  'getOrderById' : IDL.Func([IDL.Nat], [IDL.Opt(Order)], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'initializeAdmin' : IDL.Func([IDL.Text, IDL.Text], [], []),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'listOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'setAdminRole' : IDL.Func([IDL.Principal, IDL.Bool], [], []),
+  'updateOrderStatus' : IDL.Func([IDL.Nat, OrderStatus], [IDL.Opt(Order)], []),
+});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
+export const idlFactory = ({ IDL }) => {
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const OrderStatus = IDL.Variant({
+    'shipped' : IDL.Null,
+    'cancelled' : IDL.Null,
+    'pending' : IDL.Null,
+    'delivered' : IDL.Null,
+    'processing' : IDL.Null,
+  });
+  const Address = IDL.Record({
+    'zip' : IDL.Text,
+    'street' : IDL.Text,
+    'country' : IDL.Text,
+    'city' : IDL.Text,
+    'name' : IDL.Text,
+    'state' : IDL.Text,
+    'phone' : IDL.Text,
+  });
+  const Item = IDL.Record({
+    'id' : IDL.Nat,
+    'name' : IDL.Text,
+    'price' : IDL.Nat,
+  });
+  const OrderItem = IDL.Record({
+    'total' : IDL.Nat,
+    'item' : Item,
+    'quantity' : IDL.Nat,
+  });
+  const Order = IDL.Record({
+    'id' : IDL.Nat,
+    'status' : OrderStatus,
+    'billingAddress' : Address,
+    'customer' : IDL.Principal,
+    'createdAt' : IDL.Int,
+    'updatedAt' : IDL.Int,
+    'totalAmount' : IDL.Nat,
+    'shippingAddress' : Address,
+    'items' : IDL.Vec(OrderItem),
+  });
+  const UserProfile = IDL.Record({
+    'name' : IDL.Text,
+    'phone' : IDL.Text,
+    'location' : IDL.Text,
+  });
+  
+  return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'cancelOrder' : IDL.Func([IDL.Nat], [IDL.Opt(Order)], []),
+    'connectivityCheck' : IDL.Func([], [IDL.Text], ['query']),
+    'createOrder' : IDL.Func(
+        [IDL.Vec(OrderItem), Address, Address],
+        [Order],
+        [],
+      ),
+    'getAllOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
+    'getCallerRole' : IDL.Func([], [UserRole], ['query']),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getOrder' : IDL.Func([IDL.Nat], [IDL.Opt(Order)], ['query']),
+    'getOrderById' : IDL.Func([IDL.Nat], [IDL.Opt(Order)], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'initializeAdmin' : IDL.Func([IDL.Text, IDL.Text], [], []),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'listOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'setAdminRole' : IDL.Func([IDL.Principal, IDL.Bool], [], []),
+    'updateOrderStatus' : IDL.Func(
+        [IDL.Nat, OrderStatus],
+        [IDL.Opt(Order)],
+        [],
+      ),
+  });
+};
 
 export const init = ({ IDL }) => { return []; };

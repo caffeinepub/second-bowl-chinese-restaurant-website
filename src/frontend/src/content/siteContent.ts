@@ -48,13 +48,20 @@ export const siteContent = {
     ],
   },
   contact: {
-    address: '123 Main Street, San Francisco, CA 94102',
-    phone: '(415) 555-0123',
-    email: 'hello@secondbowl.com',
+    address: '124-A Iqbal Block Commercial Sector E, Bahria Town Lahore Near by Clock Tower',
+    phones: ['0336-0008508', '0309-1113017'],
+    email: 'info@secondbowl.pk',
+    website: undefined, // Optional website field
+    whatsappLink: 'https://wa.me/+923091113017', // Optional WhatsApp link
     hours: [
-      'Monday - Thursday: 11:00 AM - 9:00 PM',
-      'Friday - Saturday: 11:00 AM - 10:00 PM',
-      'Sunday: 12:00 PM - 8:00 PM',
+      'Saturday 12:00 PM–1:00 AM',
+      'Sunday 12:00 PM–1:00 AM',
+      'Monday 12:00 PM–1:00 AM',
+      'Tuesday 12:00 PM–1:00 AM',
+      'Wednesday 12:00 PM–1:00 AM',
+      'Thursday 12:00 PM–1:00 AM',
+      'Friday 12:00 PM–1:00 AM',
+      'Delivery 12:00 PM–1:00 AM',
     ],
   },
 };

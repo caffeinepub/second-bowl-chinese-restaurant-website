@@ -1,42 +1,79 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Centralize business phone/address and propagate to Contact + Footer",
+  "title": "Admin Orders panel cart-style UI refresh",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Use `frontend/src/content/siteContent.ts` as the single source of truth for business phone and address, and ensure the Contact section renders them from `siteContent.contact`.",
+      "summary": "Restyle the Admin Orders list into cart-style rounded order cards with warm total accents and pill controls.",
       "acceptanceCriteria": [
-        "`siteContent.contact.phone` and `siteContent.contact.address` are the only values that need to be edited to change the phone/address shown in the Contact section.",
-        "`frontend/src/sections/ContactSection.tsx` continues to render the phone and address from `siteContent.contact` (no hardcoded duplicates introduced).",
-        "All user-facing labels remain in English."
+        "Admin Orders list no longer looks like a plain data table on small screens; it uses card-style rows with rounded corners, border, and soft shadow similar to the cart reference.",
+        "Each order row prominently shows: Order #, customer name, item count, total amount (in primary/warm accent), status badge, and a single primary action (e.g., View Details) styled with rounded/pill design.",
+        "Spacing, typography hierarchy, and component radii/shadows are consistent with the cart-style sheet aesthetic (rounded-2xl/3xl feel, soft shadows, light borders).",
+        "All admin-facing labels remain in English."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/content/siteContent.ts",
+          "path": "frontend/src/sections/AdminOrdersSection.tsx",
           "operation": "modify",
-          "description": "Confirm and (if needed) normalize the `siteContent.contact.phone` and `siteContent.contact.address` fields as the canonical, editable values (no additional duplicate constants for phone/address introduced)."
+          "description": "Replace the current orders Table-based rendering with a responsive, cart-style card list (rounded-2xl/3xl, soft shadows, light borders) and a warm primary accent for totals; wire in the new order-card component and keep the existing admin permissions/filters. Use shadcn-ui components (Card, Badge, Button, ScrollArea, Input, Select, Dialog) to preserve consistent behavior. Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/sections/ContactSection.tsx",
+          "path": "frontend/src/sections/admin/AdminOrderCard.tsx",
+          "operation": "create",
+          "description": "Create a dedicated AdminOrderCard presentational component to render a single order as a cart-style card: prominent Order # and customer name, item count, status badge, total (text-primary), and a single pill/rounded primary action button. Use shadcn-ui components (Card/Badge/Button) for consistent styling and interaction. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Ensure the Address and Phone display continue to render strictly from `siteContent.contact.address` and `siteContent.contact.phone`, with no hardcoded fallback strings added; keep all labels in English."
+          "description": "Add admin order list utility/component classes (e.g., admin-order-card, admin-order-card-meta, admin-order-total, admin-pill-action) using Tailwind @apply to standardize rounded corners, border/shadow softness, spacing, and readable dark-mode borders/shadows without touching frontend/src/components/ui. Ensure warm primary accent remains readable in both modes."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Remove hardcoded phone/address from the footer and render the “Visit Us” block using `siteContent.contact.address` and `siteContent.contact.phone`.",
+      "summary": "Restyle the Admin Order Details dialog with cart-item cards and a warm-accent summary block, keeping pill status controls.",
       "acceptanceCriteria": [
-        "`frontend/src/components/SiteFooter.tsx` no longer contains hardcoded address/phone strings (e.g., \"123 Main Street\" or \"(415) 555-0123\").",
-        "Footer “Visit Us” displays the same phone/address as the Contact section, sourced from `frontend/src/content/siteContent.ts`.",
-        "No other footer content/regressions are introduced (quick links and branding still render)."
+        "In the Order Details dialog, the 'Order Items' section renders items as individual rounded cards (not plain divider rows), with clear quantity emphasis (e.g., “2×” styling) and item name/variant/price readability similar to the cart reference.",
+        "The dialog includes a visually distinct summary area (card or separated block) that prominently displays the order total using the warm primary color treatment.",
+        "Status update controls in the dialog use rounded/pill button styling consistent with the cart-style controls."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/SiteFooter.tsx",
+          "path": "frontend/src/sections/AdminOrdersSection.tsx",
           "operation": "modify",
-          "description": "Import `siteContent` and replace the hardcoded “Visit Us” address/phone lines with renders from `siteContent.contact.address` and `siteContent.contact.phone`; preserve existing branding, quick links, and layout."
+          "description": "Update the Order Details dialog layout: render the Order Items section as a cart-style list of item cards and add a distinct summary block at the bottom that highlights the total amount with warm primary styling; ensure status update buttons are consistently pill/rounded and match the cart-style control look. Use shadcn-ui components (Dialog, Card, Button, Badge, Separator, ScrollArea) and existing currency formatting. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/sections/admin/AdminOrderItemsList.tsx",
+          "operation": "create",
+          "description": "Create an AdminOrderItemsList component that renders order items as individual cart-item style cards (rounded-2xl, border, shadow-sm) with emphasized quantity (e.g., “2×”), clear name/price layout, and per-item total; designed for reuse inside the Admin Order Details dialog. Use shadcn-ui components (Card/Separator as needed) to match the app’s design system. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add styling helpers for the admin order details items and summary (e.g., admin-order-item-card, admin-order-item-qty, admin-order-summary) to achieve the cart-style look and ensure consistent dark-mode contrast for borders/shadows and primary accent totals, without modifying frontend/src/components/ui."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add Tailwind-based local styling support for cart-style admin order cards and summary blocks across light/dark modes without editing immutable UI component sources.",
+      "acceptanceCriteria": [
+        "No changes are made to files under frontend/src/components/ui (composed only).",
+        "The updated Admin Orders styling looks correct in both light and dark mode (borders, shadows, and primary accent remain readable).",
+        "No regression to existing customer-facing cart/checkout components."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Consolidate any repeated Tailwind class patterns into admin-specific @layer utilities/components classes for the new cart-style order cards, pill controls, and summary blocks; ensure dark-mode border/shadow/foreground contrast remains readable while leaving customer-facing cart/checkout styling unchanged."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "If needed to match the cart-style aesthetic more closely, adjust/extend Tailwind theme tokens already in use (e.g., add an additional softer shadow or radius token) while keeping existing tokens stable to avoid regressions in customer-facing cart/checkout UI."
         }
       ]
     }

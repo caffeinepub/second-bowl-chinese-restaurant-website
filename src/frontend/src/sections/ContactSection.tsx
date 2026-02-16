@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { MapPin, Phone, Mail, Clock, CheckCircle2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, CheckCircle2, Globe } from 'lucide-react';
 import { siteContent } from '@/content/siteContent';
 
 export function ContactSection() {
@@ -65,6 +65,8 @@ export function ContactSection() {
     }
   };
 
+  const hasWhatsApp = siteContent.contact.whatsappLink && siteContent.contact.whatsappLink.trim() !== '';
+
   return (
     <Section id="contact" className="bg-muted/30">
       <div className="max-w-5xl mx-auto space-y-12">
@@ -84,7 +86,7 @@ export function ContactSection() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <MapPin className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                  <MapPin className="h-5 w-5 text-primary mt-1 shrink-0" />
                   <div>
                     <p className="font-medium">Address</p>
                     <p className="text-sm text-muted-foreground">
@@ -93,16 +95,22 @@ export function ContactSection() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <Phone className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                  <Phone className="h-5 w-5 text-primary mt-1 shrink-0" />
                   <div>
                     <p className="font-medium">Phone</p>
-                    <p className="text-sm text-muted-foreground">
-                      {siteContent.contact.phone}
-                    </p>
+                    <div className="text-sm text-muted-foreground space-y-1">
+                      {siteContent.contact.phones.map((phone, index) => (
+                        <p key={index}>
+                          <a href={`tel:${phone}`} className="hover:text-primary transition-colors">
+                            {phone}
+                          </a>
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <Mail className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                  <Mail className="h-5 w-5 text-primary mt-1 shrink-0" />
                   <div>
                     <p className="font-medium">Email</p>
                     <p className="text-sm text-muted-foreground">
@@ -110,8 +118,45 @@ export function ContactSection() {
                     </p>
                   </div>
                 </div>
+                {siteContent.contact.website && (
+                  <div className="flex items-start space-x-4">
+                    <Globe className="h-5 w-5 text-primary mt-1 shrink-0" />
+                    <div>
+                      <p className="font-medium">Website</p>
+                      <a
+                        href={siteContent.contact.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline"
+                      >
+                        {siteContent.contact.website}
+                      </a>
+                    </div>
+                  </div>
+                )}
+                {hasWhatsApp && (
+                  <div className="flex items-start space-x-4">
+                    <img
+                      src="/assets/generated/whatsapp-logo.dim_128x128.png"
+                      alt="WhatsApp"
+                      className="h-5 w-5 mt-1 shrink-0"
+                    />
+                    <div>
+                      <p className="font-medium">WhatsApp</p>
+                      <a
+                        href={siteContent.contact.whatsappLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline"
+                        aria-label="Contact us on WhatsApp"
+                      >
+                        Chat with us
+                      </a>
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-start space-x-4">
-                  <Clock className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                  <Clock className="h-5 w-5 text-primary mt-1 shrink-0" />
                   <div>
                     <p className="font-medium">Hours</p>
                     <div className="text-sm text-muted-foreground space-y-1">

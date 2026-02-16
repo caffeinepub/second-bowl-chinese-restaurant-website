@@ -1,46 +1,71 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T15:34:48.534Z",
+  "generatedAt": "2026-02-16T14:53:49.120Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 1,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Make the business phone number and location (address) editable from a single source of truth in `frontend/src/content/siteContent.ts`, and ensure the Contact section displays those values from `siteContent.contact`.",
-        "status": "missing",
+        "summary": "Update the Admin Orders panel UI (frontend) so the orders list and order details visually match the style of the uploaded reference screenshot (cart-style): rounded cards, soft shadows, warm primary accent for totals, clear spacing, and pill/rounded controls.",
+        "status": "implemented",
         "plannedFiles": [
-          "frontend/src/content/siteContent.ts",
-          "frontend/src/sections/ContactSection.tsx"
+          "frontend/src/sections/AdminOrdersSection.tsx",
+          "frontend/src/sections/admin/AdminOrderCard.tsx",
+          "frontend/src/index.css"
         ],
-        "matchedFiles": []
+        "matchedFiles": [
+          "frontend/src/sections/AdminOrdersSection.tsx",
+          "frontend/src/sections/admin/AdminOrderCard.tsx",
+          "frontend/src/index.css"
+        ]
       },
       {
         "id": "REQ-2",
-        "summary": "Remove hardcoded phone number and address from the footer and render the footer “Visit Us” block using `siteContent.contact.address` and `siteContent.contact.phone` so updates automatically propagate to the footer.",
+        "summary": "Make the Admin Order Details dialog use the same card/list styling as the reference screenshot for the order items section (cart-item style list), including a clear per-item layout and a summary block at the bottom that highlights the total in the warm primary color.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/SiteFooter.tsx"
+          "frontend/src/sections/AdminOrdersSection.tsx",
+          "frontend/src/sections/admin/AdminOrderItemsList.tsx",
+          "frontend/src/index.css"
         ],
         "matchedFiles": [
-          "frontend/src/components/SiteFooter.tsx"
+          "frontend/src/sections/AdminOrdersSection.tsx",
+          "frontend/src/sections/admin/AdminOrderItemsList.tsx",
+          "frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Add/adjust any necessary Tailwind utility classes or local styling (without editing immutable UI component sources) to support the new cart-style order cards and summary blocks across light and dark modes.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
-    "build-template/README.md",
     "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/SiteFooter.tsx",
+    "frontend/src/index.css",
+    "frontend/src/sections/AdminOrdersSection.tsx",
+    "frontend/src/sections/admin/AdminOrderCard.tsx",
+    "frontend/src/sections/admin/AdminOrderItemsList.tsx",
+    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

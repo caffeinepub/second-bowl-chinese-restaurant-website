@@ -1,55 +1,85 @@
 {
   "kind": "build_request",
-  "title": "Update business phone number and location everywhere it appears",
+  "title": "Make Admin Orders panel match the uploaded cart-style UI",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Make the business phone number and location (address) editable from a single source of truth in `frontend/src/content/siteContent.ts`, and ensure the Contact section displays those values from `siteContent.contact`.",
+      "text": "Update the Admin Orders panel UI (frontend) so the orders list and order details visually match the style of the uploaded reference screenshot (cart-style): rounded cards, soft shadows, warm primary accent for totals, clear spacing, and pill/rounded controls.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Contact number change and location"
+          "Order panel is same this style"
         ]
       },
       "acceptanceCriteria": [
-        "`siteContent.contact.phone` and `siteContent.contact.address` are the only values that need to be edited to change the phone/address shown in the Contact section.",
-        "`frontend/src/sections/ContactSection.tsx` continues to render the phone and address from `siteContent.contact` (no hardcoded duplicates introduced).",
-        "All user-facing labels remain in English."
+        "Admin Orders list no longer looks like a plain data table on small screens; it uses card-style rows with rounded corners, border, and soft shadow similar to the cart reference.",
+        "Each order row prominently shows: Order #, customer name, item count, total amount (in primary/warm accent), status badge, and a single primary action (e.g., View Details) styled with rounded/pill design.",
+        "Spacing, typography hierarchy, and component radii/shadows are consistent with the cart-style sheet aesthetic (rounded-2xl/3xl feel, soft shadows, light borders).",
+        "All admin-facing labels remain in English."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Remove hardcoded phone number and address from the footer and render the footer “Visit Us” block using `siteContent.contact.address` and `siteContent.contact.phone` so updates automatically propagate to the footer.",
+      "text": "Make the Admin Order Details dialog use the same card/list styling as the reference screenshot for the order items section (cart-item style list), including a clear per-item layout and a summary block at the bottom that highlights the total in the warm primary color.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Contact number change and location"
+          "Order panel is same this style"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/components/SiteFooter.tsx` no longer contains hardcoded address/phone strings (e.g., \"123 Main Street\" or \"(415) 555-0123\").",
-        "Footer “Visit Us” displays the same phone/address as the Contact section, sourced from `frontend/src/content/siteContent.ts`.",
-        "No other footer content/regressions are introduced (quick links and branding still render)."
+        "In the Order Details dialog, the 'Order Items' section renders items as individual rounded cards (not plain divider rows), with clear quantity emphasis (e.g., “2×” styling) and item name/variant/price readability similar to the cart reference.",
+        "The dialog includes a visually distinct summary area (card or separated block) that prominently displays the order total using the warm primary color treatment.",
+        "Status update controls in the dialog use rounded/pill button styling consistent with the cart-style controls."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add/adjust any necessary Tailwind utility classes or local styling (without editing immutable UI component sources) to support the new cart-style order cards and summary blocks across light and dark modes.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Order panel is same this style"
+        ]
+      },
+      "acceptanceCriteria": [
+        "No changes are made to files under frontend/src/components/ui (composed only).",
+        "The updated Admin Orders styling looks correct in both light and dark mode (borders, shadows, and primary accent remain readable).",
+        "No regression to existing customer-facing cart/checkout components."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under `frontend/src/components/ui` (compose existing UI components instead).",
-    "Do not modify immutable hook/bootstrap files (e.g., `frontend/src/main.tsx`, `frontend/src/hooks/useInternetIdentity.ts[x]`, `frontend/src/hooks/useActor.ts`)."
+    "Do not edit immutable frontend paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, and any sources under frontend/src/components/ui (compose only).",
+    "Backend behavior and order data models must remain unchanged for this request."
   ],
   "nonGoals": [
-    "Adding a backend/admin panel to manage contact details.",
-    "Adding geolocation, maps, GPS, or third-party map SDK integrations."
+    "Adding new backend APIs or changing authorization logic.",
+    "Implementing new order fields like discount/tax if they do not already exist in the order model.",
+    "Changing the customer-facing cart UI behavior (this request is only to match its visual style in the admin orders panel)."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

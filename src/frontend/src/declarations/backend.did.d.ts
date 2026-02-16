@@ -10,7 +10,80 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export interface _SERVICE {}
+export interface Address {
+  'zip' : string,
+  'street' : string,
+  'country' : string,
+  'city' : string,
+  'name' : string,
+  'state' : string,
+  'phone' : string,
+}
+export interface Item { 'id' : bigint, 'name' : string, 'price' : bigint }
+export interface Order {
+  'id' : bigint,
+  'status' : OrderStatus,
+  'billingAddress' : Address,
+  'customer' : Principal,
+  'createdAt' : bigint,
+  'updatedAt' : bigint,
+  'totalAmount' : bigint,
+  'shippingAddress' : Address,
+  'items' : Array<OrderItem>,
+}
+export interface OrderItem {
+  'total' : bigint,
+  'item' : Item,
+  'quantity' : bigint,
+}
+export type OrderStatus = { 'shipped' : null } |
+  { 'cancelled' : null } |
+  { 'pending' : null } |
+  { 'delivered' : null } |
+  { 'processing' : null };
+export interface UserProfile {
+  'name' : string,
+  'phone' : string,
+  'location' : string,
+}
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
+export interface _SERVICE {
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'cancelOrder' : ActorMethod<[bigint], [] | [Order]>,
+  'connectivityCheck' : ActorMethod<[], string>,
+  'createOrder' : ActorMethod<[Array<OrderItem>, Address, Address], Order>,
+  /**
+   * / Fetch all orders (admin only)
+   */
+  'getAllOrders' : ActorMethod<[], Array<Order>>,
+  /**
+   * / Get caller's role/permission level
+   */
+  'getCallerRole' : ActorMethod<[], UserRole>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getOrder' : ActorMethod<[bigint], [] | [Order]>,
+  /**
+   * / Fetch order by ID without ownership check (admin only)
+   */
+  'getOrderById' : ActorMethod<[bigint], [] | [Order]>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  /**
+   * / Bootstrap initial admin if system has no admins yet
+   */
+  'initializeAdmin' : ActorMethod<[string, string], undefined>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'listOrders' : ActorMethod<[], Array<Order>>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  /**
+   * / Assign/revoke admin role to/from a specific principal (admin only)
+   */
+  'setAdminRole' : ActorMethod<[Principal, boolean], undefined>,
+  'updateOrderStatus' : ActorMethod<[bigint, OrderStatus], [] | [Order]>,
+}
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];
 export declare const idlFactory: IDL.InterfaceFactory;

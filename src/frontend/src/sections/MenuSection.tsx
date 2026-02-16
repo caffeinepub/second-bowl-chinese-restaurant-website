@@ -1,51 +1,83 @@
+import { useState } from 'react';
 import { Section } from '@/components/Section';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { menuData } from '@/data/menu';
+import { CategoryPill } from '@/components/menu/CategoryPill';
+import { MenuItemCard } from '@/components/menu/MenuItemCard';
+import { useCart } from '@/cart/useCart';
+import { toast } from 'sonner';
+import type { PriceVariant } from '@/data/menu';
 
 export function MenuSection() {
+  const [selectedCategory, setSelectedCategory] = useState(menuData.categories[0].name);
+  const { dispatch } = useCart();
+
+  const currentCategory = menuData.categories.find((cat) => cat.name === selectedCategory);
+
+  const handleAddToCart = (itemName: string, itemDescription: string, price: number, variant?: PriceVariant) => {
+    const displayName = variant ? `${itemName} (${variant.label})` : itemName;
+    const finalPrice = variant ? variant.price : price;
+    
+    dispatch({
+      type: 'ADD_ITEM',
+      payload: {
+        id: variant ? `${itemName}-${variant.label}` : itemName,
+        name: displayName,
+        price: finalPrice,
+      },
+    });
+    toast.success(`Added ${displayName} to cart`);
+  };
+
   return (
-    <Section id="menu" className="bg-muted/30">
-      <div className="max-w-5xl mx-auto space-y-12">
+    <Section id="menu" className="bg-background">
+      <div className="space-y-8">
         <div className="text-center space-y-4">
           <h2 className="text-4xl md:text-5xl font-bold">Our Menu</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover our carefully crafted dishes, made with authentic recipes and the finest ingredients.
+            Explore our authentic Chinese dishes, crafted with traditional recipes and fresh ingredients
           </p>
         </div>
 
-        <div className="space-y-12">
-          {menuData.categories.map((category) => (
-            <Card key={category.name} className="overflow-hidden">
-              <CardHeader className="bg-primary/5 border-b">
-                <CardTitle className="text-2xl md:text-3xl">{category.name}</CardTitle>
-                {category.description && (
-                  <p className="text-muted-foreground">{category.description}</p>
-                )}
-              </CardHeader>
-              <CardContent className="p-6 md:p-8">
-                <div className="space-y-6">
-                  {category.items.map((item, index) => (
-                    <div key={index}>
-                      {index > 0 && <Separator className="my-6" />}
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1 space-y-1">
-                          <h4 className="font-semibold text-lg">{item.name}</h4>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {item.description}
-                          </p>
-                        </div>
-                        <div className="text-lg font-semibold text-primary whitespace-nowrap">
-                          ${item.price.toFixed(2)}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        {/* Category selector */}
+        <div className="relative">
+          <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide-horizontal">
+            {menuData.categories.map((category) => (
+              <CategoryPill
+                key={category.name}
+                name={category.name}
+                thumbnail={category.thumbnail}
+                isSelected={selectedCategory === category.name}
+                onClick={() => setSelectedCategory(category.name)}
+              />
+            ))}
+          </div>
         </div>
+
+        {/* Menu items grid */}
+        {currentCategory && (
+          <div className="space-y-4">
+            {currentCategory.description && (
+              <p className="text-sm text-muted-foreground text-center italic">
+                {currentCategory.description}
+              </p>
+            )}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              {currentCategory.items.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  name={item.name}
+                  description={item.description}
+                  price={item.price}
+                  variants={item.variants}
+                  image={item.image}
+                  onAddToCart={(selectedVariant) =>
+                    handleAddToCart(item.name, item.description, item.price || 0, selectedVariant)
+                  }
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </Section>
   );

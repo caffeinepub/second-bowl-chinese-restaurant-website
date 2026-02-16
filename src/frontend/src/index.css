@@ -3,90 +3,195 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --radius: 0.5rem;
-        /* Warm palette inspired by Chinese restaurant aesthetics */
-        --background: 0.98 0.01 40;
-        --foreground: 0.20 0.02 30;
-        --card: 1 0 0;
-        --card-foreground: 0.20 0.02 30;
-        --popover: 1 0 0;
-        --popover-foreground: 0.20 0.02 30;
-        /* Rich red primary */
-        --primary: 0.50 0.20 15;
-        --primary-foreground: 0.98 0.01 40;
-        /* Gold accent */
-        --secondary: 0.75 0.15 75;
-        --secondary-foreground: 0.20 0.02 30;
-        --muted: 0.95 0.01 40;
-        --muted-foreground: 0.50 0.02 30;
-        --accent: 0.75 0.15 75;
-        --accent-foreground: 0.20 0.02 30;
-        --destructive: 0.55 0.22 25;
-        --destructive-foreground: 0.98 0.01 40;
-        --border: 0.88 0.02 40;
-        --input: 0.88 0.02 40;
-        --ring: 0.50 0.20 15;
-        --chart-1: 0.50 0.20 15;
-        --chart-2: 0.75 0.15 75;
-        --chart-3: 0.35 0.15 120;
-        --chart-4: 0.60 0.18 45;
-        --chart-5: 0.45 0.12 180;
-    }
+  :root {
+    /* Warm food-appropriate color palette using OKLCH */
+    --background: oklch(98% 0.01 90);
+    --foreground: oklch(20% 0.02 30);
 
-    .dark {
-        --background: 0.15 0.02 30;
-        --foreground: 0.95 0.01 40;
-        --card: 0.20 0.02 30;
-        --card-foreground: 0.95 0.01 40;
-        --popover: 0.18 0.02 30;
-        --popover-foreground: 0.95 0.01 40;
-        --primary: 0.60 0.22 15;
-        --primary-foreground: 0.98 0.01 40;
-        --secondary: 0.70 0.18 75;
-        --secondary-foreground: 0.15 0.02 30;
-        --muted: 0.25 0.02 30;
-        --muted-foreground: 0.65 0.02 40;
-        --accent: 0.70 0.18 75;
-        --accent-foreground: 0.95 0.01 40;
-        --destructive: 0.60 0.22 25;
-        --destructive-foreground: 0.98 0.01 40;
-        --border: 0.30 0.02 30;
-        --input: 0.30 0.02 30;
-        --ring: 0.60 0.22 15;
-        --chart-1: 0.60 0.22 15;
-        --chart-2: 0.70 0.18 75;
-        --chart-3: 0.45 0.18 120;
-        --chart-4: 0.65 0.20 45;
-        --chart-5: 0.55 0.15 180;
-    }
+    --card: oklch(100% 0 0);
+    --card-foreground: oklch(20% 0.02 30);
 
-    * {
-        @apply border-border;
-    }
-    
-    body {
-        @apply bg-background text-foreground;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
+    --popover: oklch(100% 0 0);
+    --popover-foreground: oklch(20% 0.02 30);
 
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-    }
+    /* Primary: Warm orange/red for food context */
+    --primary: oklch(62% 0.19 35);
+    --primary-foreground: oklch(100% 0 0);
 
-    h1 {
-        @apply text-4xl md:text-5xl lg:text-6xl;
-    }
+    /* Secondary: Neutral warm gray */
+    --secondary: oklch(92% 0.01 60);
+    --secondary-foreground: oklch(25% 0.02 30);
 
-    h2 {
-        @apply text-3xl md:text-4xl lg:text-5xl;
-    }
+    /* Muted: Soft warm gray */
+    --muted: oklch(94% 0.01 60);
+    --muted-foreground: oklch(50% 0.02 30);
 
-    h3 {
-        @apply text-2xl md:text-3xl;
-    }
+    /* Accent: Slightly warmer highlight */
+    --accent: oklch(95% 0.02 50);
+    --accent-foreground: oklch(25% 0.02 30);
+
+    /* Destructive: Red for errors/delete */
+    --destructive: oklch(55% 0.22 25);
+    --destructive-foreground: oklch(100% 0 0);
+
+    /* Success: Green for completed states */
+    --success: oklch(60% 0.15 145);
+    --success-foreground: oklch(100% 0 0);
+
+    /* Warning: Yellow for pending states */
+    --warning: oklch(75% 0.15 85);
+    --warning-foreground: oklch(20% 0.02 30);
+
+    /* Border and UI elements */
+    --border: oklch(88% 0.01 60);
+    --input: oklch(88% 0.01 60);
+    --ring: oklch(62% 0.19 35);
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: oklch(18% 0.02 30);
+    --foreground: oklch(95% 0.01 90);
+
+    --card: oklch(20% 0.02 30);
+    --card-foreground: oklch(95% 0.01 90);
+
+    --popover: oklch(20% 0.02 30);
+    --popover-foreground: oklch(95% 0.01 90);
+
+    /* Primary: Slightly brighter for dark mode */
+    --primary: oklch(68% 0.19 35);
+    --primary-foreground: oklch(100% 0 0);
+
+    --secondary: oklch(25% 0.02 30);
+    --secondary-foreground: oklch(95% 0.01 90);
+
+    --muted: oklch(25% 0.02 30);
+    --muted-foreground: oklch(65% 0.02 60);
+
+    --accent: oklch(28% 0.03 40);
+    --accent-foreground: oklch(95% 0.01 90);
+
+    --destructive: oklch(58% 0.22 25);
+    --destructive-foreground: oklch(100% 0 0);
+
+    --success: oklch(62% 0.15 145);
+    --success-foreground: oklch(100% 0 0);
+
+    --warning: oklch(78% 0.15 85);
+    --warning-foreground: oklch(20% 0.02 30);
+
+    --border: oklch(30% 0.02 30);
+    --input: oklch(30% 0.02 30);
+    --ring: oklch(68% 0.19 35);
+  }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Sheet content stacking utilities */
+@layer utilities {
+  .sheet-content-safe {
+    position: relative;
+    z-index: 100;
+  }
+
+  .sheet-overlay-safe {
+    z-index: 99;
+  }
+}
+
+/* Mobile bottom nav overlay for better text contrast */
+@layer components {
+  .mobile-nav-overlay {
+    @apply bg-gradient-to-t from-background/95 via-background/90 to-transparent;
+  }
+}
+
+/* Admin Panel Styling */
+@layer components {
+  /* Admin section container */
+  .admin-section {
+    @apply bg-muted/30 py-16;
+  }
+
+  /* Admin order card - cart-style rounded card */
+  .admin-order-card {
+    @apply transition-all duration-200;
+  }
+
+  .admin-order-card:hover {
+    @apply shadow-lg;
+  }
+
+  /* Admin order card metadata row */
+  .admin-order-card-meta {
+    @apply flex items-center justify-between;
+  }
+
+  /* Admin order total - warm primary accent */
+  .admin-order-total {
+    @apply text-primary font-bold;
+  }
+
+  /* Admin pill action button */
+  .admin-pill-action {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  /* Admin order item card - individual item in order details */
+  .admin-order-item-card {
+    @apply transition-shadow duration-200;
+  }
+
+  /* Admin order item quantity emphasis */
+  .admin-order-item-qty {
+    @apply text-primary font-bold;
+  }
+
+  /* Admin order summary block */
+  .admin-order-summary {
+    @apply bg-primary/5 dark:bg-primary/10;
+  }
+
+  /* Legacy admin table styles (kept for backward compatibility) */
+  .admin-table-card {
+    @apply overflow-hidden;
+  }
+
+  .admin-table-header {
+    @apply bg-muted/50 border-b-2;
+  }
+
+  .admin-table-row {
+    @apply hover:bg-muted/30 transition-colors;
+  }
+
+  .admin-table-row:not(:last-child) {
+    @apply border-b;
+  }
+}
+
+/* Ensure proper dark mode contrast for admin cards */
+@layer utilities {
+  .dark .admin-order-card {
+    @apply border-border/50 bg-card/50;
+  }
+
+  .dark .admin-order-item-card {
+    @apply border-border/50 bg-card/50;
+  }
+
+  .dark .admin-order-summary {
+    @apply border-primary/20;
+  }
+}

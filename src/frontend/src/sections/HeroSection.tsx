@@ -1,72 +1,75 @@
-import { Section } from '@/components/Section';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { siteContent } from '@/content/siteContent';
 
 export function HeroSection() {
   const scrollToMenu = () => {
-    const element = document.querySelector('#menu');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    const menuSection = document.querySelector('#menu');
+    if (menuSection) {
+      menuSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <Section id="home" className="relative pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden">
-      {/* Hero Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/assets/generated/second-bowl-hero.dim_1920x1080.png"
-          alt="Second Bowl Restaurant"
-          className="w-full h-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/90 to-background" />
-      </div>
+    <section
+      id="home"
+      className="relative min-h-[600px] md:min-h-[700px] flex items-center justify-center overflow-hidden"
+      style={{
+        backgroundImage: 'url(/assets/generated/ricebowl-dark-texture-bg.dim_1920x1080.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50" />
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
-        {/* Logo */}
-        <div className="flex justify-center">
+      {/* Content */}
+      <div className="relative z-10 container mx-auto px-4 py-20 text-center space-y-8">
+        {/* Logo in frosted glass container */}
+        <div className="inline-block bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
           <img
-            src="/assets/generated/second-bowl-logo.dim_512x512.png"
-            alt="Second Bowl Logo"
-            className="h-24 w-24 md:h-32 md:w-32 object-contain"
+            src="/assets/generated/second-bowl-logo-from-menu.dim_512x512.png"
+            alt="Second Bowl"
+            className="h-32 w-32 md:h-40 md:w-40 object-contain mx-auto"
           />
         </div>
 
-        {/* Title */}
-        <div className="space-y-4">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-            Second Bowl
+        {/* Tagline */}
+        <div className="space-y-4 max-w-3xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+            Authentic Chinese Cuisine
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            {siteContent.hero.tagline}
+          <p className="text-lg md:text-xl text-white/90">
+            Crafted with Passion and Tradition
           </p>
         </div>
 
-        {/* CTA */}
-        <div className="flex justify-center pt-4">
-          <Button
-            size="lg"
-            onClick={scrollToMenu}
-            className="text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all"
-          >
-            View Our Menu
-          </Button>
-        </div>
+        {/* CTA Button */}
+        <Button
+          size="lg"
+          onClick={scrollToMenu}
+          className="rounded-full text-lg px-8 py-6 bg-red-600 hover:bg-red-700 text-white shadow-lg focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+        >
+          Explore Our Menu
+        </Button>
 
-        {/* Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8 max-w-3xl mx-auto">
-          {siteContent.hero.highlights.map((highlight, index) => (
-            <Card key={index} className="border-2 hover:border-primary/50 transition-colors">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl mb-2">{highlight.icon}</div>
-                <h3 className="font-semibold mb-1">{highlight.title}</h3>
-                <p className="text-sm text-muted-foreground">{highlight.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+        {/* Highlight Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+            <div className="text-4xl mb-3">🥢</div>
+            <h3 className="font-bold text-white text-lg mb-2">Authentic Flavors</h3>
+            <p className="text-white/80 text-sm">Traditional recipes passed down through generations</p>
+          </div>
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+            <div className="text-4xl mb-3">🍜</div>
+            <h3 className="font-bold text-white text-lg mb-2">Fresh Ingredients</h3>
+            <p className="text-white/80 text-sm">Locally sourced, prepared daily with care</p>
+          </div>
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+            <div className="text-4xl mb-3">🏮</div>
+            <h3 className="font-bold text-white text-lg mb-2">Warm Atmosphere</h3>
+            <p className="text-white/80 text-sm">Dine-in and takeout available</p>
+          </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
